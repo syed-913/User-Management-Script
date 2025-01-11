@@ -1,4 +1,4 @@
-### User Management Script in Bash (Enterprise Scope)
+### User Management Script for Automation
 
 #### 1. **Introduction**
 
