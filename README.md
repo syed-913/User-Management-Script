@@ -1,89 +1,139 @@
-### User Management Script for Automation
+# User Management Script
 
-#### 1. **Introduction**
+This is an enhanced **Bash script** for managing users in a Linux environment, specifically tailored for enterprise use. It provides a robust set of features for creating, modifying, and deleting users, as well as managing user groups and enforcing strong password policies. The script is designed to be secure, user-friendly, and compliant with enterprise standards.
 
-In an enterprise environment, managing user accounts effectively is critical for maintaining security, ensuring compliance, and optimizing administrative tasks. A **user management script** in Bash automates the processes involved in creating, modifying, and deleting user accounts. This helps administrators handle large numbers of users across various systems and platforms, reducing human error, ensuring consistency, and enhancing productivity.
+---
 
-#### 2. **Importance of the Script**
+## Features
 
-The user management script plays a crucial role in the following areas:
+1. **User Creation**:
+   - Create new users with a choice of shell (`bash` or `zsh`).
+   - Enforces strong password policies:
+     - Minimum 8 characters.
+     - Requires uppercase letters, numbers, and special characters.
 
-- **Efficiency and Automation**: Enterprise environments often have numerous users across multiple systems. Manually managing these accounts can be time-consuming and error-prone. A script automates the creation, deletion, and modification of users, saving time and ensuring consistency.
-  
-- **Security**: Proper user management is essential for enforcing security policies. By automating tasks like account creation and deletion, the script ensures that only authorized individuals have access to specific systems, reducing the risk of unauthorized access or forgotten user accounts that may pose security threats.
+2. **User Deletion**:
+   - Delete users along with their associated groups and home directories.
+   - Confirmation prompt to prevent accidental deletions.
 
-- **Compliance**: Many industries have strict compliance requirements regarding user access. An automated user management script ensures that access is granted and revoked in accordance with policies, making audits and compliance checks more straightforward.
+3. **User Modification**:
+   - **Lock/Unlock Users**: Temporarily disable or enable user accounts.
+   - **Change Passwords**: Securely change user passwords with strong password enforcement.
+   - **Change Primary Group**: Modify the primary group of a user, with the option to create new groups if they don't exist.
 
-- **Error Reduction**: Manual user account handling can lead to errors such as assigning incorrect permissions, forgetting to disable or remove users who no longer need access, or failing to adhere to naming conventions. A script standardizes and simplifies this process.
+4. **User Listing**:
+   - List all users with their details, including:
+     - User ID (UID)
+     - Group ID (GID)
+     - Home directory
+     - Login shell
 
-#### 3. **Functionality of the User Management Script**
+5. **Logging**:
+   - All actions are logged to `/var/log/user_management.log` for audit purposes.
+   - Logs include timestamps, event types (e.g., SUCCESS, ERROR), and detailed messages.
 
-A typical user management script in Bash should handle the following functionalities:
+6. **User Experience**:
+   - Interactive prompts for user input.
+   - Loading animations for better feedback during operations.
 
-- **Account Creation**:
-  - The script should accept parameters such as the username, password, and user group.
-  - It should ensure that the username is unique and follows the company's naming conventions.
-  - The script can automatically assign the new user to specific groups and set appropriate permissions.
+---
 
-- **Password Management**:
-  - It can create secure passwords, either automatically generated or provided by the administrator.
-  - Passwords should be hashed before being saved.
-  - The script can include password expiration and complexity rules to enhance security.
+## Usage
 
-- **Account Modification**:
-  - The script should allow for modifications like changing a user's password, adding/removing from groups, and updating user details.
-  - It should enforce strong password policies and group membership rules.
+### 1. **Running the Script**
+To use the script, simply execute it in a Bash shell:
 
-- **Account Deletion**:
-  - The script can handle the removal of users who no longer need access, ensuring that their files are archived or deleted.
-  - Proper logging should be implemented for accountability, detailing who deleted which account and when.
+```bash
+sudo ./User_management.sh
+```
 
-- **Audit and Logging**:
-  - Keeping track of user actions and script executions is crucial. The script should log every action it performs (e.g., account creation, modification, deletion) in a secure log file.
-  - This can help administrators track user management activities, monitor for unusual behavior, and maintain compliance with auditing standards.
+> **Note**: The script requires root privileges to perform user management tasks.
 
-- **Error Handling**:
-  - The script should gracefully handle common errors such as attempting to create a user with an existing username, permission issues, or invalid input.
+### 2. **Main Menu**
+The script provides a menu-driven interface with the following options:
 
-#### 4. **Key Features of the Script**
+- **1. Add User**: Create a new user with a strong password and a choice of shell.
+- **2. Remove User**: Delete a user, their group, and home directory.
+- **3. Modify User**: Modify user attributes (lock/unlock, change password, change primary group).
+- **4. List Users**: Display a list of all users with their details.
+- **0. Exit**: Exit the script.
 
-- **Scalability**: The script should be able to handle a large number of users efficiently. It should be adaptable to environments where users are added and removed regularly.
+### 3. **Logging**
+All actions performed by the script are logged to `/var/log/user_management.log`. This log file is created automatically if it doesn't exist, and it includes timestamps and event details for auditing purposes.
 
-- **Customizability**: Depending on the organization's policies, the script should be customizable to allow modifications to group assignments, password policies, and other settings.
+---
 
-- **Security Best Practices**: The script should ensure that:
-  - Passwords are hashed using secure algorithms (e.g., SHA-512).
-  - It avoids storing passwords in plain text or outputting them to the screen.
-  - It runs with the least privilege principle, ensuring that sensitive operations are carried out by privileged users (root).
+## Example Workflow
 
-- **User Group Management**: The script should allow for users to be added or removed from specific groups (e.g., admin, developers, HR), with each group having defined access rights.
+### **Creating a New User**
+1. Select option **1** from the main menu.
+2. Enter the username and a strong password (minimum 8 characters, with uppercase, numbers, and special characters).
+3. Choose the login shell (`bash` or `zsh`).
+4. The user is created, and the action is logged.
 
-- **System Integration**: The script should integrate with the enterprise’s existing tools and systems, such as LDAP, Active Directory, or other centralized user databases.
+### **Deleting a User**
+1. Select option **2** from the main menu.
+2. Enter the username to delete.
+3. Confirm the deletion.
+4. The user, their group, and home directory are removed, and the action is logged.
 
-#### 5. **Deployment in Enterprise Environments**
+### **Modifying a User**
+1. Select option **3** from the main menu.
+2. Choose from the following sub-options:
+   - **Lock/Unlock User**: Temporarily disable or enable a user account.
+   - **Change Password**: Update the user's password with strong password enforcement.
+   - **Change Primary Group**: Modify the user's primary group, with the option to create a new group if it doesn't exist.
+3. The changes are applied, and the action is logged.
 
-When deploying a user management script in an enterprise, consider the following:
+### **Listing Users**
+1. Select option **4** from the main menu.
+2. A table of all users is displayed, showing their UID, GID, home directory, and login shell.
 
-- **Role-Based Access Control (RBAC)**: Ensure that the script is used by authorized personnel only, with defined roles for administrators, support staff, and other teams. Sensitive operations like deleting users or modifying group memberships should be restricted.
+---
 
-- **Scheduling and Automation**: The script can be scheduled to run at specific intervals or triggered by specific events (e.g., user joining or leaving the company). Tools like **cron** can be used to automate periodic tasks such as password expiration or group reorganization.
+## Security Features
 
-- **Centralized Logging**: In larger organizations, logging should not be confined to local machines. Centralized logging solutions like **Syslog**, **ELK stack**, or **Splunk** can help collect and analyze logs from all systems for better visibility and security.
+- **Strong Password Enforcement**: Ensures all passwords meet enterprise security standards.
+- **Audit Logging**: All actions are logged for compliance and security auditing.
+- **Confirmation Prompts**: Prevents accidental deletions or modifications.
 
-- **Version Control and Documentation**: For larger teams, version control systems like **Git** can be used to track changes to the script and ensure that updates are controlled and documented. Documentation should be available to explain how to use the script, its configuration, and common troubleshooting steps.
+---
 
-#### 6. **Challenges and Best Practices**
+## Log File Example
 
-- **Scalability**: As the enterprise grows, the number of users and systems will increase. The script should be designed with scalability in mind, perhaps by integrating with other enterprise systems (e.g., LDAP, Active Directory) to offload some tasks.
+The log file (`/var/log/user_management.log`) records all actions with timestamps and event types. Here's an example of what the log might look like:
 
-- **Auditability**: Always log actions performed by the script, especially sensitive actions like account deletion or permission changes. This log should be tamper-proof to ensure accountability.
+```
+[01-Oct-2023 14:30:45] [SUCCESS] New user 'john' created in BASH shell
+[01-Oct-2023 14:31:10] [ERROR] Failed to change the password of user 'john'
+[01-Oct-2023 14:32:00] [INFO] The 'developers' group is now the group owner of all the files owned by 'john'
+```
 
-- **Backup and Recovery**: In case of a failure or unintended change, it’s crucial to have a mechanism for backing up user data and recovering deleted accounts or files.
+---
 
-- **Testing**: Test the script in a staging environment before deploying it to production systems. This ensures that no unintended consequences will affect production systems or user access.
+## Requirements
 
-- **Compliance**: Depending on the industry, there may be compliance standards for user management (e.g., **GDPR**, **HIPAA**). Ensure that the script adheres to these standards, such as securing personal data and limiting access to sensitive information.
+- **Bash Shell**: The script is written for Bash and should be run in a Bash environment.
+- **Root Privileges**: The script requires root access to perform user management tasks.
+- **Linux Environment**: Designed for Linux systems with standard user management tools (`useradd`, `usermod`, `userdel`, etc.).
 
-#### 7. **Conclusion**
+---
 
-A Bash script for user management is an essential tool in an enterprise setting. It helps streamline administrative tasks, improves security, ensures compliance, and reduces human error. By automating the management of user accounts, organizations can focus on their core business functions while maintaining a secure and organized environment. Proper testing, logging, and scalability will ensure that the script remains an effective and reliable tool in the long run.
+## Contributing
+
+Contributions are welcome! If you'd like to improve this script, feel free to:
+
+1. Fork the repository.
+2. Make your changes.
+3. Submit a pull request.
+
+---
+
+## Author
+
+Syed Ammar
+Email: syedammar06@proton.me
+
+---
+
+Enjoy managing users with this powerful and secure script! 🚀
