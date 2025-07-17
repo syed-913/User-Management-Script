@@ -129,11 +129,4 @@ Contributions are welcome! If you'd like to improve this script, feel free to:
 
 ---
 
-## Author
-
-Syed Ammar
-Email: syedammar06@proton.me
-
----
-
 Enjoy managing users with this powerful and secure script! 🚀
